@@ -1,0 +1,29 @@
+import matplotlib.pyplot as plt
+import pandas as pd
+
+# Load the CSV file
+csv_path = '/API_SP.POP.TOTL_DS2_en_csv_v2_422294[1].csv'
+data = pd.read_csv(csv_path, skiprows=4)
+
+# Select data for the year 2023
+year = '2023'
+population_2023 = data[['Country Name', year]].dropna()
+
+# Bar Chart: Population by Country for the year 2023
+top_countries = population_2023.nlargest(10, year)  # Top 10 countries by population
+plt.figure(figsize=(14, 6))
+plt.bar(top_countries['Country Name'], top_countries[year], color='skyblue')
+plt.xlabel('Country')
+plt.ylabel('Population in 2023')
+plt.title('Top 10 Countries by Population in 2023')
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.show()
+
+# Histogram: Distribution of Population for the year 2023
+plt.figure(figsize=(14, 6))
+plt.hist(population_2023[year], bins=30, color='purple', edgecolor='black')
+plt.xlabel('Population')
+plt.ylabel('Frequency')
+plt.title('Population Distribution in 2023')
+plt.show()
